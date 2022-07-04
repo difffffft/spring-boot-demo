@@ -1,0 +1,62 @@
+#启动配置环境
+spring:
+  main:
+    banner-mode: off
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.95.121.226:3306/demo?useSSL=false
+    username: demo
+    password: demo
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+
+mybatis-plus:
+  configuration:
+    # 数据库下划线映射成驼峰
+    map-underscore-to-camel-case: true
+    # sql运行时输出语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      #主键策略:雪花算法ID
+      id-type: ASSIGN_ID
+
+
+
+app:
+  upload:
+    path:
+      # 图片视频上传路径
+      img: /upload/images/
+      video: /upload/videos/
+
+
+
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  port: 8080
+---
+#生产环境
+spring:
+  config:
+    activate:
+      on-profile: pro
+server:
+  port: 81
+---
+#测试环境
+spring:
+  config:
+    activate:
+      on-profile: test
+server:
+  port: 82
