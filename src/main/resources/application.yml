@@ -10,9 +10,6 @@ spring:
     username: demo
     password: demo
     type: com.alibaba.druid.pool.DruidDataSource
-
-
-
 mybatis-plus:
   configuration:
     # 数据库下划线映射成驼峰
@@ -24,9 +21,6 @@ mybatis-plus:
     db-config:
       #主键策略:雪花算法ID
       id-type: ASSIGN_ID
-
-
-
 app:
   upload:
     path:
@@ -43,7 +37,7 @@ spring:
     activate:
       on-profile: dev
 server:
-  port: 8080
+  port: 3000
 ---
 #生产环境
 spring:
@@ -51,12 +45,4 @@ spring:
     activate:
       on-profile: pro
 server:
-  port: 81
----
-#测试环境
-spring:
-  config:
-    activate:
-      on-profile: test
-server:
-  port: 82
+  port: 3000

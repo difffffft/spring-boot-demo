@@ -17,7 +17,7 @@ import com.example.common.R;
  * 检查用户是否登录完成
  */
 @Slf4j
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoginCheckFilter implements Filter {
 
     //匹配器

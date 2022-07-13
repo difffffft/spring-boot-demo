@@ -11,5 +11,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+        log.info("server run http://localhost:3000/api/");
     }
 }
