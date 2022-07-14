@@ -1,7 +1,9 @@
 package com.example.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.common.R;
+import com.example.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 
@@ -11,13 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.example.common.R;
-
 /**
  * 检查用户是否登录完成
  */
 @Slf4j
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoginCheckFilter implements Filter {
 
     //匹配器
@@ -35,16 +35,27 @@ public class LoginCheckFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
+
         //白名单校验
         if (check(URLS, request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
+
+        String token = request.getHeader("Token");
         // 登录校验
         if (request.getHeader("Token") != null) {
+            try {
+                DecodedJWT jwt = JwtUtil.decrypt(token);
+                System.out.println(jwt.getClaim("id").asLong());
+            } catch (Exception e) {
+                response.getWriter().write(JSON.toJSONString(R.error("登录异常或过期,请重新登录")));
+                return;
+            }
             filterChain.doFilter(request, response);
             return;
         }
+
         // 未登录,不让请求
         response.getWriter().write(JSON.toJSONString(R.error("用户未登录")));
     }
