@@ -27,6 +27,8 @@ app:
       # 图片视频上传路径
       img: /upload/images/
       video: /upload/videos/
+server:
+  port: 3000
 
 
 
@@ -36,13 +38,9 @@ spring:
   config:
     activate:
       on-profile: dev
-server:
-  port: 3000
 ---
 #生产环境
 spring:
   config:
     activate:
       on-profile: pro
-server:
-  port: 3000

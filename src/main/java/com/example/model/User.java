@@ -23,6 +23,19 @@ public class User implements Serializable {
      */
     private String username;
 
+    /**
+     * 创建人
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Long createUser;
+
+
+    /**
+     * 修改人
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updateUser;
+
 
     /**
      * 创建时间
@@ -32,23 +45,9 @@ public class User implements Serializable {
 
 
     /**
-     * 创建人
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
-
-
-    /**
      * 修改时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
-
-    /**
-     * 修改人
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
 }
 

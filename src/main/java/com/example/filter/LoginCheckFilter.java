@@ -17,18 +17,17 @@ import com.example.common.R;
  * 检查用户是否登录完成
  */
 @Slf4j
-//@WebFilter("/*")
+@WebFilter("/*")
 public class LoginCheckFilter implements Filter {
 
     //匹配器
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
-    //路由校验白名单
+
+    //不需要登录就可以访问的接口
     public static final String[] URLS = {
             "/static/**",
-            "/error/**",
-            "/download/**"
+            "/api/error/**",
     };
-
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -36,25 +35,16 @@ public class LoginCheckFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
-
-        log.info("拦截到请求:{}", request.getRequestURI());
-
-        // 白名单校验
+        //白名单校验
         if (check(URLS, request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        // 404校验
-
-
         // 登录校验
-        if (request.getSession().getAttribute("employee") != null) {
-            Long id = (Long) request.getSession().getAttribute("employee");
+        if (request.getHeader("Token") != null) {
             filterChain.doFilter(request, response);
             return;
         }
-
         // 未登录,不让请求
         response.getWriter().write(JSON.toJSONString(R.error("用户未登录")));
     }

@@ -28,4 +28,13 @@ public class UserController {
         return R.success("查询成功", null);
     }
 
+    @GetMapping("/a")
+    public R a() {
+        return R.success("a访问成功", null);
+    }
+
+    @GetMapping("/b")
+    public R b() {
+        return R.success("b访问成功", null);
+    }
 }

@@ -10,10 +10,6 @@ spring:
     username: demo
     password: demo
     type: com.alibaba.druid.pool.DruidDataSource
-#server:
-#  servlet:
-#    # 全局统一前缀
-#    context-path: /api
 mybatis-plus:
   configuration:
     # 数据库下划线映射成驼峰
@@ -31,6 +27,8 @@ app:
       # 图片视频上传路径
       img: /upload/images/
       video: /upload/videos/
+server:
+  port: 3000
 
 
 
@@ -40,13 +38,9 @@ spring:
   config:
     activate:
       on-profile: dev
-server:
-  port: 3000
 ---
 #生产环境
 spring:
   config:
     activate:
       on-profile: pro
-server:
-  port: 3000

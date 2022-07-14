@@ -6,4 +6,5 @@ import com.example.model.User;
 
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+
 }

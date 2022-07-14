@@ -1,18 +1,18 @@
 package com.example.config;
 
 import com.example.util.JsonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.*;
 
 
 import java.util.List;
 
 @Configuration
-public class SpringMvcConfig extends WebMvcConfigurationSupport {
+public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     /**
      * 静态资源放行
@@ -36,6 +36,15 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setObjectMapper(new JsonUtil());
         converters.add(0, messageConverter);
+    }
+
+    /**
+     * 接口全局加前缀访问
+     * @param configurer
+     */
+    @Override
+    protected void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.addPathPrefix("/api", c -> c.isAnnotationPresent(RestController.class));
     }
 }
 
